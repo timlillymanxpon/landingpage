@@ -180,108 +180,108 @@ export default function Page() {
                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500" />
                   </div>
                 </div>
-                <div className="flex flex-col h-[500px] md:h-[700px]">
+                <div className="flex flex-col md:flex-row h-[500px] md:h-[700px]">
                   {/* Sidebar */}
-                  <div className="hidden md:block w-64 border-r border-neutral-800 p-4">
+                  <div className="hidden md:block md:w-64 border-r border-neutral-800 p-4 flex-shrink-0">
                     <div className="flex items-center gap-2 p-2 bg-neutral-800 rounded-lg mb-4">
                       <div className="w-8 h-8 rounded-full bg-neutral-700" />
                       <span>Cursor AI</span>
                     </div>
                     <div className="space-y-1">
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800">
+                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
                         <span>Prompts</span>
                         <span className="text-sm text-neutral-500">3</span>
                       </div>
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800">
+                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
                         <span>Components</span>
                         <span className="text-sm text-neutral-500">25+</span>
                       </div>
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800">
+                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
                         <span>Time Saved</span>
                         <span className="text-sm text-neutral-500">100h+</span>
                       </div>
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800">
+                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
                         <span>Money Saved</span>
                         <span className="text-sm text-green-500">$10k+</span>
                       </div>
                     </div>
                   </div>
                   {/* Mobile Stats Bar */}
-                  <div className="md:hidden w-full border-b border-neutral-800 p-2 bg-neutral-800/50">
+                  <div className="md:hidden w-full border-b border-neutral-800 p-3 bg-neutral-800/50">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded-full bg-neutral-700" />
-                        <span className="text-sm">Cursor AI</span>
+                        <span className="text-sm font-medium">Cursor AI</span>
                       </div>
-                      <div className="flex items-center gap-3 text-xs">
-                        <span className="text-neutral-500">3 Prompts</span>
-                        <span className="text-green-500">$10k+ Saved</span>
+                      <div className="flex items-center gap-4 text-xs">
+                        <span className="text-neutral-400">3 Prompts</span>
+                        <span className="text-green-500 font-medium">$10k+ Saved</span>
                       </div>
                     </div>
                   </div>
                   {/* Main Content */}
-                  <div className="flex-1 p-2 md:p-4 overflow-y-auto">
-                    <div className="flex items-center justify-between mb-4">
+                  <div className="flex-1 flex flex-col p-3 md:p-4 overflow-hidden">
+                    <div className="flex items-center justify-between mb-4 sticky top-0">
                       <input
                         type="text"
                         placeholder="Enter your prompt here..."
-                        className="w-full max-w-md px-3 md:px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700 text-sm md:text-base"
+                        className="w-full max-w-2xl px-3 md:px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700 text-sm md:text-base placeholder:text-neutral-500"
                       />
                       <div className="flex items-center gap-1 md:gap-2 ml-2">
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
                           <span className="sr-only">Generate</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v19"/><path d="M5 12h14"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v19"/><path d="M5 12h14"/></svg>
                         </Button>
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
                           <span className="sr-only">Save</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
                         </Button>
                       </div>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-4 overflow-y-auto flex-1 pr-1">
                       <div className="p-4 rounded-lg bg-neutral-800">
-                        <div className="flex items-center gap-4 mb-2">
-                          <div className="w-8 h-8 rounded-full bg-neutral-700" />
-                          <div>
-                            <h3 className="font-medium">Cursor AI</h3>
-                            <p className="text-sm text-neutral-400">Prompt #1: Hero Section</p>
+                        <div className="flex items-center gap-3 md:gap-4 mb-2">
+                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-neutral-700 flex-shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-medium text-sm md:text-base">Cursor AI</h3>
+                            <p className="text-xs md:text-sm text-neutral-400">Prompt #1: Hero Section</p>
                           </div>
-                          <div className="ml-auto text-sm text-green-400">
+                          <div className="text-xs md:text-sm text-green-400 flex-shrink-0">
                             Generated in 2s
                           </div>
                         </div>
-                        <p className="text-neutral-300">
+                        <p className="text-sm md:text-base text-neutral-300">
                           I&apos;ll create a modern, attention-grabbing hero section for your landing page. 
                           Just describe your product&apos;s main value proposition, and I&apos;ll generate the perfect
                           layout with compelling copy and visuals.
                         </p>
                       </div>
 
-                      <div className="p-8 rounded-lg bg-neutral-800/50 border border-neutral-700 border-dashed text-center">
+                      <div className="p-6 md:p-8 rounded-lg bg-neutral-800/50 border border-neutral-700 border-dashed text-center">
                         <div className="mb-4">
-                          <svg className="mx-auto w-12 h-12 text-neutral-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="mx-auto w-10 h-10 md:w-12 md:h-12 text-neutral-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
-                        <h3 className="text-xl font-semibold mb-2">Upload any image and get any fucking landing page you want</h3>
-                        <p className="text-neutral-400 mb-4">Drag and drop an image, or click to browse</p>
-                        <Button variant="outline" size="lg">
+                        <h3 className="text-lg md:text-xl font-semibold mb-2">Upload any image and get any fucking landing page you want</h3>
+                        <p className="text-sm md:text-base text-neutral-400 mb-4">Drag and drop an image, or click to browse</p>
+                        <Button variant="outline" size="lg" className="h-9 md:h-10 text-sm md:text-base">
                           Choose Image
                         </Button>
                       </div>
 
                       <div className="p-4 rounded-lg bg-neutral-800">
-                        <div className="flex items-center gap-4 mb-2">
-                          <div className="w-8 h-8 rounded-full bg-neutral-700" />
-                          <div>
-                            <h3 className="font-medium">Cursor AI</h3>
-                            <p className="text-sm text-neutral-400">Image Analysis</p>
+                        <div className="flex items-center gap-3 md:gap-4 mb-2">
+                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-neutral-700 flex-shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-medium text-sm md:text-base">Cursor AI</h3>
+                            <p className="text-xs md:text-sm text-neutral-400">Image Analysis</p>
                           </div>
-                          <div className="ml-auto text-sm text-neutral-400">
+                          <div className="text-xs md:text-sm text-neutral-400 flex-shrink-0">
                             Waiting for image...
                           </div>
                         </div>
-                        <p className="text-neutral-300">
+                        <p className="text-sm md:text-base text-neutral-300">
                           yup its really that easy, download the template, open it in cursor, upload an image, and i will create that website... like legit
                         </p>
                       </div>
