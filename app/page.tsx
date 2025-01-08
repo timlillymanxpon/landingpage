@@ -173,16 +173,16 @@ export default function Page() {
           <div className="max-w-[1200px] mx-auto scroll-animation">
             <div className="glimmer-card">
               <div className="bg-neutral-900">
-                <div className="flex items-center gap-2 p-3 border-b border-neutral-800">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div className="flex items-center gap-2 p-2 md:p-3 border-b border-neutral-800">
+                  <div className="flex gap-1.5 md:gap-2">
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500" />
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500" />
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500" />
                   </div>
                 </div>
-                <div className="flex h-[700px]">
+                <div className="flex flex-col h-[500px] md:h-[700px]">
                   {/* Sidebar */}
-                  <div className="w-64 border-r border-neutral-800 p-4">
+                  <div className="hidden md:block w-64 border-r border-neutral-800 p-4">
                     <div className="flex items-center gap-2 p-2 bg-neutral-800 rounded-lg mb-4">
                       <div className="w-8 h-8 rounded-full bg-neutral-700" />
                       <span>Cursor AI</span>
@@ -206,15 +206,28 @@ export default function Page() {
                       </div>
                     </div>
                   </div>
+                  {/* Mobile Stats Bar */}
+                  <div className="md:hidden w-full border-b border-neutral-800 p-2 bg-neutral-800/50">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-neutral-700" />
+                        <span className="text-sm">Cursor AI</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-xs">
+                        <span className="text-neutral-500">3 Prompts</span>
+                        <span className="text-green-500">$10k+ Saved</span>
+                      </div>
+                    </div>
+                  </div>
                   {/* Main Content */}
-                  <div className="flex-1 p-4 overflow-y-auto">
+                  <div className="flex-1 p-2 md:p-4 overflow-y-auto">
                     <div className="flex items-center justify-between mb-4">
                       <input
                         type="text"
                         placeholder="Enter your prompt here..."
-                        className="w-full max-w-md px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700"
+                        className="w-full max-w-md px-3 md:px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700 text-sm md:text-base"
                       />
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1 md:gap-2 ml-2">
                         <Button variant="ghost" size="icon">
                           <span className="sr-only">Generate</span>
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v19"/><path d="M5 12h14"/></svg>
