@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Software Composer LP - Cursor Template",
-  description: "Create stunning landing pages in minutes with just 3 prompts. Save thousands on design and development with our Cursor-powered template.",
+  title: "Cursible - From Idea to App in Seconds",
+  description: "Transform your ideas into production-ready applications instantly with Cursible, your AI-powered full stack engineer. Save months of development time.",
 };
 
 export default function RootLayout({

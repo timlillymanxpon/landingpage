@@ -11,8 +11,12 @@ const config: Config = {
   	extend: {
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'dotted-grid': 'radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.15) 2px, transparent 0)',
   		},
+      backgroundSize: {
+        'dotted-grid': '32px 32px',
+      },
   		keyframes: {
   			appear: {
   				'0%': {
