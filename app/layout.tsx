@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500'],
+  style: ['normal'],
+})
+
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: "VibeDev - The New Way to Vibe Code with Cursor",
-  description: "Experience the new way of coding with VibeDev. Transform your development workflow and vibe with your code like never before.",
+  title: "vibedev.ai",
+  description: "Experience the new way of coding with vibedev.ai. Transform your development workflow and vibe with your code like never before.",
   icons: {
     icon: [
       {
@@ -55,7 +65,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/images/idevibelogo.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-black bg-dotted-grid`}>{children}</body>
     </html>
   );
 }
