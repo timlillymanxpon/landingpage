@@ -35,7 +35,11 @@ export const metadata: Metadata = {
       },
     ],
   },
-  manifest: "/manifest.json"
+  manifest: "/manifest.json",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1
+  }
 };
 
 export default function RootLayout({
@@ -46,7 +50,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <link rel="icon" type="image/png" href="/images/idevibelogo.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/idevibelogo.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/idevibelogo.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/idevibelogo.png" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
