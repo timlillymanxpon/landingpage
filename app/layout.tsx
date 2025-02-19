@@ -34,7 +34,8 @@ export const metadata: Metadata = {
         url: "/images/idevibelogo.png",
       },
     ],
-  }
+  },
+  manifest: "/manifest.json"
 };
 
 export default function RootLayout({
@@ -44,6 +45,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="icon" type="image/png" href="/images/idevibelogo.png" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
