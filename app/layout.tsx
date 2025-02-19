@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "IDEvibe - The New Way to Vibe Code with Cursor",
-  description: "Experience the new way of coding with IDEvibe. Transform your development workflow and vibe with your code like never before.",
+  title: "VibeDev - The New Way to Vibe Code with Cursor",
+  description: "Experience the new way of coding with VibeDev. Transform your development workflow and vibe with your code like never before.",
   icons: {
     icon: [
       {
