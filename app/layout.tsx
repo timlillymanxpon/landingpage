@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cursible - From Idea to App in Seconds",
-  description: "Transform your ideas into production-ready applications instantly with Cursible, your AI-powered full stack engineer. Save months of development time.",
+  title: "IDEvibe - The New Way to Vibe Code with Cursor",
+  description: "Experience the new way of coding with IDEvibe. Transform your development workflow and vibe with your code like never before.",
 };
 
 export default function RootLayout({

@@ -3,6 +3,19 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useEffect, useRef } from "react"
+import { Playfair_Display, Inter } from 'next/font/google'
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500'],
+  style: ['normal'],
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function Page() {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -26,8 +39,29 @@ export default function Page() {
     return () => observerRef.current?.disconnect();
   }, []);
 
+  useEffect(() => {
+    const loadTally = () => {
+      const existingScript = document.querySelector('script[src="https://tally.so/widgets/embed.js"]');
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = "https://tally.so/widgets/embed.js";
+        script.async = true;
+        script.onload = () => {
+          // @ts-ignore
+          if (window.Tally) {
+            // @ts-ignore
+            window.Tally.loadEmbeds();
+          }
+        };
+        document.body.appendChild(script);
+      }
+    };
+
+    loadTally();
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen bg-black text-foreground bg-dotted-grid">
+    <div className={`flex flex-col min-h-screen bg-black text-foreground bg-dotted-grid ${inter.className}`}>
       <style jsx global>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(20px); }
@@ -132,8 +166,8 @@ export default function Page() {
 
       {/* Navigation */}
       <header className="flex items-center justify-between py-4 px-6 border-b border-neutral-800/50">
-        <Link href="/" className="text-lg font-semibold">
-          Cursible
+        <Link href="/" className={`text-2xl md:text-3xl font-medium ${playfair.className}`}>
+          VibeDev.ai
         </Link>
         <nav className="flex items-center gap-4">
           <Button variant="ghost" size="sm" asChild>
@@ -153,20 +187,32 @@ export default function Page() {
             {/* Logo Placeholder */}
             <div className="mb-4">
               <img 
-                src="/images/logoogo.png" 
-                alt="Cursible Logo" 
-                className="w-24 h-24 mx-auto object-contain"
+                src="/images/idevibelogo.png" 
+                alt="VibeDev Logo" 
+                className="w-36 h-36 mx-auto object-contain"
               />
             </div>
-            <div className="inline-flex items-center px-3 py-1 text-sm text-neutral-400 mb-8 glimmer-pill fade-in">
-              <span>Your Superhuman Full Stack Engineer</span>
+            <div className="inline-flex items-center px-6 py-2 text-base font-medium text-purple-400 mb-8 glimmer-pill fade-in bg-purple-500/10 border border-purple-500/20 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
+              <span className={playfair.className}>A Software Composer app</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight fade-in delay-1">
-              From Idea to App<br />in Seconds
+            <h1 className={`text-4xl md:text-5xl font-medium mb-6 tracking-tight fade-in delay-1 ${playfair.className}`}>
+              The Easiest Way To<br />Vibe Code With Cursor
             </h1>
+            <p className="text-lg text-neutral-400 mb-8 fade-in delay-2">
+              VibeDev is your IDE for Vibe Coding
+            </p>
             <div className="fade-in delay-3">
-              <Button size="lg" className="rounded-full">
-                Start Building Now
+              <Button 
+                size="lg" 
+                className="rounded-full"
+                onClick={() => {
+                  document.getElementById('early-access-form')?.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                  });
+                }}
+              >
+                Get Early Access
               </Button>
             </div>
           </div>
@@ -177,191 +223,99 @@ export default function Page() {
           <div className="max-w-[1200px] mx-auto scroll-animation">
             <div className="glimmer-card">
               <div className="bg-neutral-900">
-                <div className="flex items-center gap-2 p-2 md:p-3 border-b border-neutral-800">
-                  <div className="flex gap-1.5 md:gap-2">
-                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500" />
-                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500" />
-                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500" />
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row h-[500px] md:h-[700px]">
-                  {/* Sidebar */}
-                  <div className="hidden md:block md:w-64 border-r border-neutral-800 p-4 flex-shrink-0">
-                    <div className="flex items-center gap-2 p-2 bg-neutral-800 rounded-lg mb-4">
-                      <div className="w-8 h-8 rounded-full bg-neutral-700" />
-                      <span>Cursible AI</span>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
-                        <span>Development Time</span>
-                        <span className="text-sm text-green-500">Seconds</span>
-                      </div>
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
-                        <span>Stack Coverage</span>
-                        <span className="text-sm text-neutral-500">100%</span>
-                      </div>
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
-                        <span>Code Quality</span>
-                        <span className="text-sm text-neutral-500">Production</span>
-                      </div>
-                      <div className="flex items-center justify-between p-2 rounded hover:bg-neutral-800 transition-colors">
-                        <span>Time Saved</span>
-                        <span className="text-sm text-green-500">Months</span>
+                <div className="flex flex-col md:flex-row h-auto md:h-[600px]">
+                  {/* Input Section */}
+                  <div className="w-full md:w-1/2 md:border-r border-neutral-800 p-6 flex flex-col">
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-neutral-400 mb-2">What should Cursor do?</label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          placeholder="Describe what you want to build..."
+                          className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500/30"
+                        />
+                        <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-green-500/10 rounded-lg text-green-400 hover:bg-green-500/20 transition-colors">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M22 2L11 13"/>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+                          </svg>
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  {/* Mobile Stats Bar */}
-                  <div className="md:hidden w-full border-b border-neutral-800 p-3 bg-neutral-800/50">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-neutral-700" />
-                        <span className="text-sm font-medium">Cursible AI</span>
-                      </div>
-                      <div className="flex items-center gap-4 text-xs">
-                        <span className="text-neutral-400">Full Stack</span>
-                        <span className="text-green-500 font-medium">Production Ready</span>
+                    
+                    <div>
+                      <h3 className="text-sm font-medium text-neutral-400 mb-4">Start from</h3>
+                      <div className="grid grid-cols-1 gap-3">
+                        {[...Array(2)].map((_, i) => (
+                          <button
+                            key={i}
+                            className="flex items-center gap-3 p-4 bg-neutral-800/50 rounded-lg hover:bg-neutral-800 transition-colors text-left group"
+                          >
+                            <div className="w-8 h-8 rounded-lg bg-green-500/10 text-green-400 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                              </svg>
+                            </div>
+                            <span className="text-sm font-medium">Template {i + 1}</span>
+                          </button>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  {/* Main Content */}
-                  <div className="flex-1 flex flex-col p-3 md:p-4 overflow-hidden">
-                    <div className="flex items-center justify-between mb-4 sticky top-0">
-                      <input
-                        type="text"
-                        placeholder="Enter your prompt here..."
-                        className="w-full max-w-2xl px-3 md:px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700 text-sm md:text-base placeholder:text-neutral-500"
-                      />
-                      <div className="flex items-center gap-1 md:gap-2 ml-2">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
-                          <span className="sr-only">Generate</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v19"/><path d="M5 12h14"/></svg>
-                        </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
-                          <span className="sr-only">Save</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
-                        </Button>
+
+                  {/* Cursor Composer Section - Hidden on mobile */}
+                  <div className="hidden md:flex md:w-1/2 md:flex-col">
+                    <div className="p-4 border-b border-neutral-800">
+                      <h2 className="text-lg font-medium">Cursor Composer</h2>
+                    </div>
+                    <div className="flex-1 p-4 overflow-y-auto space-y-4">
+                      {/* First Message */}
+                      <div className="flex justify-end">
+                        <div className="max-w-[85%] p-4 bg-neutral-800 rounded-lg">
+                          <p className="text-sm text-neutral-300 text-right">
+                            Sure, I can make those changes for you.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Status Updates */}
+                      <div className="flex flex-col gap-2">
+                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
+                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
+                        </div>
+                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
+                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
+                        </div>
+                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
+                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
+                        </div>
+                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
+                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
+                        </div>
+                      </div>
+
+                      {/* Completion Message */}
+                      <div className="flex justify-end">
+                        <div className="max-w-[85%] p-4 bg-neutral-800 rounded-lg">
+                          <p className="text-sm text-neutral-300 text-right">
+                            I&apos;ve successfully created your app
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <div className="space-y-4 overflow-y-auto flex-1 pr-1">
-                      <div className="p-4 rounded-lg bg-neutral-800">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="min-w-0">
-                            <h3 className="font-medium text-sm md:text-base">Your Prompt</h3>
-                          </div>
-                        </div>
-                        <p className="text-sm md:text-base text-neutral-300">
-                          Create a Twitter clone with full-stack features including authentication, real-time updates, and user profiles
-                        </p>
-                      </div>
-
-                      <div className="rounded-lg bg-neutral-800">
-                        <div className="flex items-center justify-between p-4 border-b border-neutral-800">
-                          <h3 className="font-medium text-sm md:text-base">Result</h3>
-                          <span className="text-xs md:text-sm text-green-400">Generated in 3s</span>
-                        </div>
-
-                        {/* Twitter Feed */}
-                        <div className="divide-y divide-neutral-800">
-                          {/* Tweet Compose */}
-                          <div className="p-4 border-b border-neutral-800">
-                            <div className="flex-1">
-                              <textarea 
-                                placeholder="What's happening?"
-                                className="w-full bg-transparent border-none focus:ring-0 text-white placeholder-neutral-500 resize-none"
-                                rows={2}
-                              />
-                              <div className="flex justify-between items-center mt-3">
-                                <div className="flex gap-2 text-blue-400">
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                  </svg>
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
-                                </div>
-                                <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full">
-                                  Tweet
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Tweet 1 */}
-                          <div className="p-4 hover:bg-neutral-800/50 transition-colors cursor-pointer">
-                            <div>
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="font-bold">Sarah Johnson</span>
-                                <span className="text-neutral-500">@sarahj</span>
-                                <span className="text-neutral-500">· 2h</span>
-                              </div>
-                              <p className="text-neutral-100">Just deployed my first app with @Cursible! 🚀 From idea to production in seconds. This is revolutionary! #coding #AI</p>
-                              <div className="flex gap-10 mt-3 text-neutral-500">
-                                <button className="flex items-center gap-2 hover:text-blue-400">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                  </svg>
-                                  28
-                                </button>
-                                <button className="flex items-center gap-2 hover:text-green-400">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                  </svg>
-                                  124
-                                </button>
-                                <button className="flex items-center gap-2 hover:text-red-400">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                  </svg>
-                                  892
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Tweet 2 */}
-                          <div className="p-4 hover:bg-neutral-800/50 transition-colors cursor-pointer">
-                            <div>
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="font-bold">Alex Chen</span>
-                                <span className="text-neutral-500">@alexc_dev</span>
-                                <span className="text-neutral-500">· 4h</span>
-                              </div>
-                              <p className="text-neutral-100">Mind = blown 🤯 Cursible just helped me build a full-stack app with auth, database, and real-time updates in under 5 minutes. The future is here! #webdev #cursible</p>
-                              <div className="flex gap-10 mt-3 text-neutral-500">
-                                <button className="flex items-center gap-2 hover:text-blue-400">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                  </svg>
-                                  45
-                                </button>
-                                <button className="flex items-center gap-2 hover:text-green-400">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                  </svg>
-                                  267
-                                </button>
-                                <button className="flex items-center gap-2 hover:text-red-400">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                  </svg>
-                                  1.2k
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="p-4 rounded-lg bg-neutral-800">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="min-w-0">
-                            <h3 className="font-medium text-sm md:text-base">Status</h3>
-                            <p className="text-xs md:text-sm text-green-400">Ready to deploy</p>
-                          </div>
-                        </div>
-                        <p className="text-sm md:text-base text-neutral-300">
-                          Generated with Next.js and Prisma. All components styled, database schema created, and authentication configured.
-                        </p>
+                    <div className="p-4 border-t border-neutral-800">
+                      <div className="relative">
+                        <input
+                          type="text"
+                          placeholder="Type your message..."
+                          className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500/30"
+                        />
+                        <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-green-500/10 rounded-lg text-green-400 hover:bg-green-500/20 transition-colors">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M22 2L11 13"/>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+                          </svg>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -372,149 +326,71 @@ export default function Page() {
         </section>
 
         {/* Features Section */}
-        <section className="py-32 px-6 border-t border-neutral-800">
+        <section className="py-20 px-6 border-t border-neutral-800">
           <div className="max-w-[1200px] mx-auto">
-            <div className="text-center mb-24 scroll-animation">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Create in Minutes, Not Months</h2>
-              <p className="text-neutral-400">Transform your ideas into reality with three simple prompts.</p>
+            <div className="text-center mb-16 scroll-animation">
+              <h2 className={`text-3xl md:text-4xl font-medium mb-3 ${playfair.className}`}>Create in Minutes, Not Months</h2>
+              <p className="text-neutral-400 text-lg">Transform your ideas into reality with three simple prompts.</p>
             </div>
 
-            <div className="relative">
-              {/* Decorative line connecting the steps */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-neutral-800 via-pink-500/20 to-neutral-800 hidden md:block" />
-              
-              <div className="grid md:grid-cols-3 gap-24 relative">
-                <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800 scroll-animation scroll-delay-1">
-                  <div className="text-2xl mb-6">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                      <polyline points="7 10 12 15 17 10"/>
-                      <line x1="12" y1="15" x2="12" y2="3"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">Download Template</h3>
-                  <p className="text-neutral-400">
-                    Get started with our production-ready template. It&apos;s packed with everything you need to build a stunning landing page.
-                  </p>
+            <div className="grid md:grid-cols-3 gap-6 relative">
+              <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800/80 hover:border-green-500/20 transition-colors scroll-animation scroll-delay-1 group">
+                <div className="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
                 </div>
+                <h3 className={`text-xl font-medium mb-3 group-hover:text-green-400 transition-colors ${playfair.className}`}>Download Template</h3>
+                <p className="text-neutral-400 leading-relaxed">
+                  Get started with our production-ready template. It&apos;s packed with everything you need to build a stunning landing page.
+                </p>
+              </div>
 
-                <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800 scroll-animation scroll-delay-2">
-                  <div className="text-2xl mb-6">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4z"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">Tell Cursor What You Want</h3>
-                  <p className="text-neutral-400">
-                    Describe your vision in plain English. Cursor will transform your words into a beautiful, functional design.
-                  </p>
+              <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800/80 hover:border-green-500/20 transition-colors scroll-animation scroll-delay-2 group">
+                <div className="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4z"/>
+                  </svg>
                 </div>
+                <h3 className={`text-xl font-medium mb-3 group-hover:text-green-400 transition-colors ${playfair.className}`}>Tell VibeDev What You Want</h3>
+                <p className="text-neutral-400 leading-relaxed">
+                  Describe your vision in plain English. VibeDev will control Cursor to transform your words into a beautiful, functional design.
+                </p>
+              </div>
 
-                <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800 scroll-animation scroll-delay-3">
-                  <div className="text-2xl mb-6">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      <line x1="2" y1="12" x2="22" y2="12"/>
-                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">Deploy to the Internet</h3>
-                  <p className="text-neutral-400">
-                    Push your new landing page live with one click. Share your creation with the world in seconds.
-                  </p>
+              <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800/80 hover:border-green-500/20 transition-colors scroll-animation scroll-delay-3 group">
+                <div className="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+                  </svg>
                 </div>
+                <h3 className={`text-xl font-medium mb-3 group-hover:text-green-400 transition-colors ${playfair.className}`}>Deploy to Vercel</h3>
+                <p className="text-neutral-400 leading-relaxed">
+                  Deploy your landing page to Vercel with one click. Share your creation with the world instantly on a global edge network.
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section className="py-20 px-6 border-t border-neutral-800">
+        {/* Early Access Form Section */}
+        <section id="early-access-form" className="py-20 px-6 border-t border-neutral-800 bg-neutral-900/80">
           <div className="max-w-[1200px] mx-auto text-center">
             <div className="scroll-animation">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Pricing (Plot Twist: It&apos;s All Free)</h2>
-              <p className="text-neutral-400 mb-12">Because great tools shouldn&apos;t cost a fortune. Or anything.</p>
+              <h2 className={`text-3xl md:text-4xl font-medium mb-4 ${playfair.className}`}>Get Early Access</h2>
+              <p className="text-neutral-400 mb-12">Be the first to experience the future of coding.</p>
             </div>
-            <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="col-span-1">
-                {/* Starter Plan */}
-                <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800">
-                  <h3 className="text-xl font-semibold mb-2">Starter</h3>
-                  <div className="text-3xl font-bold mb-4">$0</div>
-                  <p className="text-neutral-400 mb-6">Perfect for getting started</p>
-                  <ul className="space-y-4 mb-8">
-                    <li className="flex items-center gap-2">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                      Basic features
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                      Community support
-                    </li>
-                  </ul>
-                  <Button className="w-full" variant="outline">Get Started</Button>
-                </div>
-              </div>
-              <div className="col-span-1">
-                {/* Pro Plan */}
-                <div className="bg-neutral-900 p-8 rounded-xl border-2 border-pink-500/20 relative">
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-pink-500/10 text-pink-500 px-3 py-1 rounded-full text-xs font-medium">
-                    Most Popular
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">Pro</h3>
-                  <div className="text-2xl font-bold mb-1">$0</div>
-                  <div className="text-xs text-neutral-400 mb-4">Save $0 when you pay yearly!</div>
-                  <p className="text-sm text-neutral-400 mb-6">Everything you need</p>
-                  <ul className="space-y-4 mb-8 text-sm">
-                    <li className="flex items-center gap-2">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                      Everything in Starter
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                      Advanced features (free)
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                      Priority support (also free)
-                    </li>
-                  </ul>
-                  <Button className="w-full text-sm">Upgrade for $0</Button>
-                </div>
-              </div>
-              <div className="col-span-1">
-                {/* Enterprise Plan */}
-                <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800">
-                  <h3 className="text-xl font-semibold mb-2">Enterprise</h3>
-                  <div className="text-3xl font-bold mb-4">$0</div>
-                  <p className="text-neutral-400 mb-6">For larger teams</p>
-                  <ul className="space-y-4 mb-8">
-                    <li className="flex items-center gap-2">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                      Everything in Pro
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                      Custom features (free)
-                    </li>
-                  </ul>
-                  <Button className="w-full" variant="outline">Contact Sales</Button>
-                </div>
-              </div>
+            <div className="max-w-[400px] mx-auto scroll-animation">
+              <iframe 
+                data-tally-src="https://tally.so/embed/wM756p?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+                loading="lazy" 
+                width="100%" 
+                height="230" 
+                frameBorder="0" 
+                title="Sign Up for Early Access"
+              ></iframe>
             </div>
           </div>
         </section>
