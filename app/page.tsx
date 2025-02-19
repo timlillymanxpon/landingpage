@@ -170,11 +170,16 @@ export default function Page() {
           VibeDev.ai
         </Link>
         <nav className="flex items-center gap-4">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/login">Log in</Link>
-          </Button>
-          <Button size="sm" asChild>
-            <Link href="/signup">Try for Free</Link>
+          <Button 
+            size="sm"
+            onClick={() => {
+              document.getElementById('early-access-form')?.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+              });
+            }}
+          >
+            Sign Up
           </Button>
         </nav>
       </header>
