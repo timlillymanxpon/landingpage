@@ -28,6 +28,12 @@ export const metadata: Metadata = {
       }
     ],
     shortcut: [{ url: "/images/idevibelogo.png" }],
+    other: [
+      {
+        rel: "icon",
+        url: "/images/idevibelogo.png",
+      },
+    ],
   }
 };
 
