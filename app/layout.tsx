@@ -12,14 +12,22 @@ export const metadata: Metadata = {
       {
         url: "/images/idevibelogo.png",
         type: "image/png",
+        sizes: "32x32"
+      },
+      {
+        url: "/images/idevibelogo.png",
+        type: "image/png",
+        sizes: "16x16"
       }
     ],
     apple: [
       {
         url: "/images/idevibelogo.png",
         type: "image/png",
+        sizes: "180x180"
       }
     ],
+    shortcut: [{ url: "/images/idevibelogo.png" }],
   }
 };
 
