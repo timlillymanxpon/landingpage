@@ -63,6 +63,12 @@ const config: Config = {
   				dark: '#1F7A72',
   				foreground: '#ffffff'
   			},
+  			secondary: {
+  				DEFAULT: '#6366F1',
+  				dark: '#4F46E5',
+  				light: '#818CF8',
+  				foreground: '#ffffff'
+  			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
