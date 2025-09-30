@@ -59,13 +59,15 @@ const config: Config = {
   				foreground: 'hsl(var(--muted-foreground))'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				DEFAULT: '#27978D',
+  				dark: '#1F7A72',
+  				foreground: '#ffffff'
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+  			'premium-light': '#F9FAFB',
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',

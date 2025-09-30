@@ -2,15 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { useEffect, useRef } from "react"
-import { Playfair_Display, Inter } from 'next/font/google'
-
-const playfair = Playfair_Display({ 
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '500'],
-  style: ['normal'],
-})
+import { Inter } from 'next/font/google'
+import Image from 'next/image'
+import CallFormModal from '@/components/CallFormModal'
+import { useState } from 'react'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,310 +13,616 @@ const inter = Inter({
 })
 
 export default function Page() {
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '50px'
-    });
-
-    document.querySelectorAll('.scroll-animation').forEach((element) => {
-      observerRef.current?.observe(element);
-    });
-
-    return () => observerRef.current?.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const loadTally = () => {
-      const existingScript = document.querySelector('script[src="https://tally.so/widgets/embed.js"]');
-      if (!existingScript) {
-        const script = document.createElement('script');
-        script.src = "https://tally.so/widgets/embed.js";
-        script.async = true;
-        script.onload = () => {
-          // @ts-ignore
-          if (window.Tally) {
-            // @ts-ignore
-            window.Tally.loadEmbeds();
-          }
-        };
-        document.body.appendChild(script);
-      }
-    };
-
-    loadTally();
-  }, []);
-
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
   return (
-    <div className={`flex flex-col min-h-screen bg-black text-foreground bg-dotted-grid ${inter.className}`}>
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes shimmer {
-          0% { background-position: 0% 0; }
-          100% { background-position: 200% 0; }
-        }
-
-        .fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-          opacity: 0;
-        }
-
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        
-        .glimmer-card {
-          position: relative;
-          background: rgb(23, 23, 23);
-          border-radius: 12px;
-          overflow: hidden;
-        }
-        
-        .glimmer-card::before {
-          content: '';
-          position: absolute;
-          inset: -1px;
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(236, 72, 153, 0.03),
-            rgba(236, 72, 153, 0.06),
-            rgba(236, 72, 153, 0.03),
-            transparent
-          );
-          background-size: 200% 100%;
-          animation: shimmer 8s ease-in-out infinite;
-          pointer-events: none;
-        }
-
-        .glimmer-pill {
-          position: relative;
-          background: rgb(23, 23, 23);
-          border-radius: 9999px;
-          overflow: hidden;
-        }
-        
-        .glimmer-pill::before {
-          content: '';
-          position: absolute;
-          inset: -1px;
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(236, 72, 153, 0.03),
-            rgba(236, 72, 153, 0.06),
-            rgba(236, 72, 153, 0.03),
-            transparent
-          );
-          background-size: 200% 100%;
-          animation: shimmer 8s ease-in-out infinite;
-          pointer-events: none;
-        }
-
-        .hero-glow {
-          position: absolute;
-          top: 85%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 140%;
-          height: 600px;
-          background: radial-gradient(
-            circle at center,
-            rgba(255, 255, 255, 0.08) 0%,
-            rgba(255, 255, 255, 0.03) 35%,
-            transparent 70%
-          );
-          pointer-events: none;
-          z-index: 0;
-          filter: blur(50px);
-        }
-
-        .scroll-animation {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .scroll-animation.animate-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .scroll-delay-1 { transition-delay: 0.1s; }
-        .scroll-delay-2 { transition-delay: 0.2s; }
-        .scroll-delay-3 { transition-delay: 0.3s; }
-      `}</style>
-
+    <div className={`flex flex-col min-h-screen bg-white text-gray-900 ${inter.className}`}>
       {/* Navigation */}
-      <header className="flex items-center justify-between py-4 px-6 border-b border-neutral-800/50">
-        <Link href="/" className={`text-2xl md:text-3xl font-medium ${playfair.className}`}>
-          VibeDev.ai
+      <header className="flex items-center gap-6 py-8 px-8 border-b border-gray-100">
+        <Link href="/" className={`text-2xl font-bold text-gray-900 ${inter.className}`}>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center text-white font-bold text-sm">TL</div>
+            <span>Tim Lillyman</span>
+          </div>
         </Link>
-        <nav className="flex items-center gap-4">
-          <Button 
-            size="sm"
-            onClick={() => {
-              document.getElementById('early-access-form')?.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'center'
-              });
-            }}
-          >
-            Sign Up
-          </Button>
+        <nav className="hidden md:flex items-center gap-8 ml-auto">
+          <Link href="#help" className="text-gray-600 hover:text-accent transition-colors">Services</Link>
+          <Link href="#approach" className="text-gray-600 hover:text-accent transition-colors">Process</Link>
+          <Link href="#agents" className="text-gray-600 hover:text-accent transition-colors">Results</Link>
+          <Link href="#about" className="text-gray-600 hover:text-accent transition-colors">About</Link>
         </nav>
+        <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-8 py-3 rounded-lg shadow-soft hover:scale-105 transition-all duration-300 text-base font-medium">
+          Book a Call
+        </Button>
       </header>
 
-      <main className="flex-grow">
+      <main className="flex-1">
         {/* Hero Section */}
-        <section className="py-20 px-6 relative">
-          <div className="hero-glow" />
-          <div className="max-w-[1200px] mx-auto text-center relative z-10">
-            {/* Logo Placeholder */}
-            <div className="mb-4">
-              <img 
-                src="/images/idevibelogo.png" 
-                alt="VibeDev Logo" 
-                className="w-36 h-36 mx-auto object-contain"
-              />
+        <section className="py-24 px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+                             <div>
+                 <h1 className={`text-6xl lg:text-7xl font-bold mb-8 leading-tight text-gray-900 ${inter.className}`}>
+                   I Build AI Agents & Automation That Actually Move the Needle for Your Business
+                 </h1>
+                 <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+                   I partner with forward-thinking leaders to design AI agents and intelligent automation that don't just handle repetitive tasks—they transform how your entire operation runs.
+                 </p>
+                
+                 <Button size="lg" className="bg-accent hover:bg-accent-dark text-white text-lg px-10 py-5 rounded-lg shadow-soft hover:shadow-soft-hover hover:scale-105 transition-all duration-300 font-medium">
+                   Book a call with me.
+                 </Button>
+               </div>
+              
+                             {/* Hero Image with Floating Cards */}
+               <div className="relative">
+
+                 {/* Main Headshot Container */}
+                 <div className="relative max-w-md mx-auto">
+                   <Image
+                     src="/images/Tim new Headshot.png"
+                     alt="Tim Lillyman - Marketing and AI Expert"
+                     width={448}
+                     height={448}
+                     className="w-full h-auto shadow-soft rounded-lg"
+                     priority
+                   />
+                   
+                   {/* Floating Cards */}
+                   <div className="absolute -top-4 -left-4 bg-white rounded-lg p-4 shadow-soft border border-gray-100 transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                     <div className="text-center">
+                       <div className="text-xl mb-2">👨‍💼</div>
+                       <p className="font-medium text-sm text-gray-900">Tim Lillyman</p>
+                       <p className="text-xs text-gray-500">AI Automation Expert</p>
+                     </div>
+                   </div>
+                   
+                   <div className="absolute top-1/2 -right-8 bg-white rounded-lg p-3 shadow-soft border border-gray-100 transform rotate-6 hover:rotate-0 transition-transform duration-300">
+                     <div className="text-center">
+                       <div className="text-xl mb-1">🤖</div>
+                       <p className="font-medium text-xs text-gray-900">50+ Agents</p>
+                       <p className="text-xs text-gray-500">Implemented</p>
+                     </div>
+                   </div>
+                   
+                   <div className="absolute -bottom-4 -right-4 bg-white rounded-lg p-4 shadow-soft border border-gray-100 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                     <div className="text-center">
+                       <div className="text-2xl mb-2">⏰</div>
+                       <p className="font-medium text-sm text-gray-900">8 Years</p>
+                       <p className="text-xs text-gray-500">Marketing & Tech</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
             </div>
-            <div className="inline-flex items-center px-6 py-2 text-base font-medium text-purple-400 mb-8 glimmer-pill fade-in bg-purple-500/10 border border-purple-500/20 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-              <span className={playfair.className}>A Software Composer app</span>
+          </div>
+        </section>
+
+                 {/* Personal Story Section */}
+         <section className="py-24 px-8 bg-premium-light">
+           <div className="max-w-7xl mx-auto">
+             <div className="grid lg:grid-cols-2 gap-16 items-center">
+               <div className="bg-premium-light rounded-2xl p-4 shadow-soft">
+                 <div className="relative rounded-xl overflow-hidden h-[420px]">
+                   <Image
+                     src="/images/tim-presentation.jpg"
+                     alt="Tim Lillyman presenting on AI maturity"
+                     fill
+                     className="object-cover"
+                     sizes="(min-width: 1024px) 40vw, 100vw"
+                     priority
+                   />
+                 </div>
+               </div>
+               
+               <div>
+                                 <h2 className={`text-4xl font-bold mb-6 text-gray-900 ${inter.className}`}>
+                    Why I Specialise in AI Agents & Automation (And Why Most Fail)
+                  </h2>
+                  <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                    <p>
+                      After watching countless businesses waste millions on AI tools that promised the world but delivered complexity, I decided to focus exclusively on one thing: building AI agents and intelligent automation systems that actually integrate with how real businesses operate.
+                    </p>
+                    <p>
+                      My approach is different. Instead of starting with the technology, I start with your processes. I spend time understanding your workflows, your bottlenecks, and your goals. Then I build AI agents and automation that feel like a natural extension of your operations—not another system to fight with.
+                    </p>
+                  </div>
+                 
+               </div>
+             </div>
+           </div>
+         </section>
+
+        {/* My Approach Section */}
+        <section id="approach" className="py-24 px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+                                <h2 className={`text-4xl font-bold mb-6 text-gray-900 ${inter.className}`}>
+                   My 4-Phase AI Implementation Method
+                 </h2>
+                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                   Here's exactly how I work with clients to build AI agents and automation systems that deliver results:
+                 </p>
             </div>
-            <h1 className={`text-4xl md:text-5xl font-medium mb-6 tracking-tight fade-in delay-1 ${playfair.className}`}>
-              The Easiest Way To<br />Vibe Code With Cursor
-            </h1>
-            <p className="text-lg text-neutral-400 mb-8 fade-in delay-2">
-              VibeDev is your IDE for Vibe Coding
-            </p>
-            <div className="fade-in delay-3">
-              <Button 
-                size="lg" 
-                className="rounded-full"
-                onClick={() => {
-                  document.getElementById('early-access-form')?.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                  });
-                }}
-              >
-                Get Early Access
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                             <div className="text-center relative">
+                 <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">1</div>
+                 <h3 className="text-xl font-bold mb-4 text-gray-900">Listen First</h3>
+                 <p className="text-gray-600 italic mb-4">
+                   I take time to understand current processes and daily frustrations, identifying what's slowing your team down and the opportunity lies.
+                 </p>
+                 <div className="hidden lg:block absolute top-8 right-0 w-px h-32 bg-gray-200"></div>
+               </div>
+              
+                             <div className="text-center relative">
+                 <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">2</div>
+                                  <h3 className="text-xl font-bold mb-4 text-gray-900">Design for Your Reality</h3>
+                  <p className="text-gray-600 italic mb-4">
+                    No cookie-cutter solutions. Agents and automation workflows that work with your existing tools, processes, and team dynamics.
+                  </p>
+                  <div className="hidden lg:block absolute top-8 right-0 w-px h-32 bg-gray-200"></div>
+               </div>
+              
+                             <div className="text-center relative">
+                 <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">3</div>
+                                  <h3 className="text-xl font-bold mb-4 text-gray-900">Build and Test Obsessively</h3>
+                  <p className="text-gray-600 italic mb-4">
+                    No deploy-and-disappear approach. Hands-on involvement until your agents and automation are performing exactly as promised.
+                  </p>
+                  <div className="hidden lg:block absolute top-8 right-0 w-px h-32 bg-gray-200"></div>
+               </div>
+              
+                             <div className="text-center relative">
+                 <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">4</div>
+                                  <h3 className="text-xl font-bold mb-4 text-gray-900">Optimise for Growth</h3>
+                  <p className="text-gray-600 italic mb-4">
+                    As your business evolves, your agents and automation evolve with you. Ongoing refinement ensures they keep delivering value.
+                  </p>
+               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Client Success Stories */}
+        <section className="py-24 px-8 bg-premium-light">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className={`text-4xl font-bold mb-6 text-gray-900 ${inter.className}`}>
+                What Others Say
+              </h2>
+            </div>
+            
+            <div className="grid lg:grid-cols-2 gap-12">
+              <div className="bg-premium-light rounded-2xl p-8 shadow-soft relative">
+                <div className="absolute top-6 left-6 text-4xl text-accent/30 font-serif">"</div>
+                <div className="flex items-center gap-4 mb-6">
+                  <Image
+                    src="/images/Leadership-Chris_Rozic-modified.png"
+                    alt="Chris Rozic"
+                    width={80}
+                    height={80}
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
+                  <div>
+                    <h3 className="font-medium text-lg text-gray-900">Chris Rozic</h3>
+                    <p className="text-gray-500">Chief Growth Officer at XPON</p>
+                  </div>
+                </div>
+                <blockquote className="text-gray-700 text-lg italic mb-6">
+                  "Tim has been a genuine force multiplier for our entire Go-to-Market function. His pioneering work in AI and automation has, and continues to deliver, tangible, bottom-line results for XPON. We've specifically seen a huge impact on our Sales team, with each rep saving over 15 hours of their time each week thanks to the AI systems Tim has built."
+                </blockquote>
+              </div>
+
+              <div className="bg-premium-light rounded-2xl p-8 shadow-soft relative">
+                <div className="absolute top-6 left-6 text-4xl text-accent/30 font-serif">"</div>
+                <div className="flex items-center gap-4 mb-6">
+                  <Image
+                    src="/images/Louise-Cummins-media-photo-modified.png"
+                    alt="Louise Cummins"
+                    width={80}
+                    height={80}
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
+                  <div>
+                    <h3 className="font-medium text-lg text-gray-900">Louise Cummins</h3>
+                    <p className="text-gray-500">Co-Founder of Australian Centre for AI in Marketing</p>
+                  </div>
+                </div>
+                <blockquote className="text-gray-700 text-lg italic mb-6">
+                  "In the rapidly evolving landscape of AI in marketing, it is critical to identify the next generation of leaders who can navigate the complexity. Tim Lillyman is undoubtedly one of those leaders. Through the events and conversations I have hosted with Tim, I've been consistently impressed. He pairs a forward-thinking, strategic vision with the crucial, hands-on technical knowledge required to execute on it."
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* AI Agents in Action */}
+        <section id="agents" className="py-24 px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className={`text-4xl font-bold mb-6 text-gray-900 ${inter.className}`}>
+                Real AI Agents I've Built for Real Businesses
+              </h2>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+                Here are just six examples of AI agents I've successfully implemented for clients across different industries. Each one integrates seamlessly with existing processes and delivers measurable improvements in efficiency and outcomes.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {/* Content Generation Agent */}
+              <div className="group relative bg-white rounded-2xl p-6 shadow-soft border border-gray-100 transition-all duration-300 hover:shadow-soft-hover hover:-translate-y-1 h-full">
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-accent/5 pointer-events-none"/>
+                <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110">💬</div>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Content Generation Agent</h3>
+                <div className="text-gray-600 space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium">What It Does</p>
+                    <p>Automatically creates blog posts, social media content, email campaigns, and marketing materials based on your brand guidelines and target audience.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Real Impact</p>
+                    <p className="italic">“Reduced content creation time from 8 hours to 30 minutes per piece whilst maintaining brand consistency across all channels.”</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Perfect For</p>
+                    <p>Marketing teams, agencies, and content-heavy businesses</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Lead Management Agent */}
+              <div className="group relative bg-white rounded-2xl p-6 shadow-soft border border-gray-100 transition-all duration-300 hover:shadow-soft-hover hover:translate-y-[-4px] h-full">
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-accent/5 pointer-events-none"/>
+                <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110">🎯</div>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Lead Management Agent</h3>
+                <div className="text-gray-600 space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium">What It Does</p>
+                    <p>Intelligently qualifies, scores, and routes leads through your sales funnel, ensuring no opportunities slip through the cracks.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Real Impact</p>
+                    <p className="italic">“Increased lead qualification accuracy by 85% and reduced response time from 4 hours to 2 minutes.”</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Perfect For</p>
+                    <p>Sales teams with high lead volumes and complex qualification criteria</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Proposal & SOW Agent */}
+              <div className="group relative bg-white rounded-2xl p-6 shadow-soft border border-gray-100 transition-all duration-300 hover:shadow-soft-hover hover:-translate-y-1 h-full">
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-accent/5 pointer-events-none"/>
+                <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110">📋</div>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Proposal and SOW Agent</h3>
+                <div className="text-gray-600 space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium">What It Does</p>
+                    <p>Generates customised proposals, statements of work, and contracts based on client conversations, requirements, and your service offerings.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Real Impact</p>
+                    <p className="italic">“Cut proposal creation time from 3 days to 45 minutes whilst increasing win rates by 23% through better personalisation.”</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Perfect For</p>
+                    <p>Service businesses, consultancies, and agencies</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sales Coaching Agent */}
+              <div className="group relative bg-white rounded-2xl p-6 shadow-soft border border-gray-100 transition-all duration-300 hover:shadow-soft-hover hover:translate-y-[-4px] h-full">
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-accent/5 pointer-events-none"/>
+                <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110">🏆</div>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Sales Coaching Agent</h3>
+                <div className="text-gray-600 space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium">What It Does</p>
+                    <p>Analyses sales calls, provides real-time feedback, and offers personalised coaching recommendations to improve performance.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Real Impact</p>
+                    <p className="italic">“Improved average deal closure rates by 34% and reduced onboarding time for new sales reps from 6 months to 8 weeks.”</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Perfect For</p>
+                    <p>Sales organisations focused on continuous improvement and team development</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Prospecting Agent */}
+              <div className="group relative bg-white rounded-2xl p-6 shadow-soft border border-gray-100 transition-all duration-300 hover:shadow-soft-hover hover:-translate-y-1 h-full">
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-accent/5 pointer-events-none"/>
+                <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110">🔍</div>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Prospecting Agent</h3>
+                <div className="text-gray-600 space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium">What It Does</p>
+                    <p>Researches potential clients, identifies key decision makers, and crafts personalised outreach messages based on company insights and industry trends.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Real Impact</p>
+                    <p className="italic">“Increased qualified meeting bookings by 67% whilst reducing prospecting time per lead from 45 minutes to 3 minutes.”</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Perfect For</p>
+                    <p>Business development teams and companies focused on scaling outbound sales</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Account Management Agent */}
+              <div className="group relative bg-white rounded-2xl p-6 shadow-soft border border-gray-100 transition-all duration-300 hover:shadow-soft-hover hover:translate-y-[-4px] h-full">
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-accent/5 pointer-events-none"/>
+                <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110">👥</div>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Account Management Agent</h3>
+                <div className="text-gray-600 space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium">What It Does</p>
+                    <p>Monitors client health scores, identifies upsell opportunities, manages renewal timelines, and maintains ongoing client relationships.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Real Impact</p>
+                    <p className="italic">“Reduced churn by 41% and increased account expansion revenue by 28% through proactive relationship management.”</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Perfect For</p>
+                    <p>SaaS companies, subscription businesses, and service providers with ongoing client relationships</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mt-16">
+              <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-6">
+                These are just six examples. Your business might need something completely different—and that's exactly what I specialise in: custom AI agents designed for your unique processes and challenges.
+              </p>
+              <Button asChild className="bg-accent hover:bg-accent-dark text-white px-8 py-3 rounded-lg shadow-soft">
+                <Link href="#services">Book Your Strategy Session</Link>
               </Button>
             </div>
           </div>
         </section>
 
-        {/* Demo Section */}
-        <section className="py-20 px-6">
-          <div className="max-w-[1200px] mx-auto scroll-animation">
-            <div className="glimmer-card">
-              <div className="bg-neutral-900">
-                <div className="flex flex-col md:flex-row h-auto md:h-[600px]">
-                  {/* Input Section */}
-                  <div className="w-full md:w-1/2 md:border-r border-neutral-800 p-6 flex flex-col">
-                    <div className="mb-6">
-                      <label className="block text-sm font-medium text-neutral-400 mb-2">What should Cursor do?</label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="Describe what you want to build..."
-                          className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500/30"
-                        />
-                        <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-green-500/10 rounded-lg text-green-400 hover:bg-green-500/20 transition-colors">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M22 2L11 13"/>
-                            <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
-                          </svg>
-                        </button>
+        {/* How I Can Help You */}
+        <section id="help" className="py-24 px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className={`text-4xl font-bold mb-6 text-gray-900 ${inter.className}`}>
+                How I Can Help You
+              </h2>
+            </div>
+            
+                         <div className="grid lg:grid-cols-2 gap-12">
+                               <div className="bg-premium-light rounded-2xl p-8 border-2 border-accent/20 shadow-soft">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="bg-accent text-white px-3 py-1 rounded-full text-sm font-medium">Most Popular Choice</div>
+                  </div>
+                  <h3 className="text-2xl font-medium mb-4 text-gray-900">Hire Me As Your AI Expert</h3>
+                  <p className="text-gray-700 mb-6">
+                    Every business has unique automation needs. Rather than one-size-fits-all pricing, let's first understand exactly what you need, then provide transparent, fixed-price proposals.
+                  </p>
+                  
+                  <div className="mb-6">
+                    <h4 className="font-medium text-gray-900 mb-3">What's Included:</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                        <span className="text-gray-700">Comprehensive needs analysis and strategy session</span>
                       </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-sm font-medium text-neutral-400 mb-4">Start from</h3>
-                      <div className="grid grid-cols-1 gap-3">
-                        {[...Array(2)].map((_, i) => (
-                          <button
-                            key={i}
-                            className="flex items-center gap-3 p-4 bg-neutral-800/50 rounded-lg hover:bg-neutral-800 transition-colors text-left group"
-                          >
-                            <div className="w-8 h-8 rounded-lg bg-green-500/10 text-green-400 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
-                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                              </svg>
-                            </div>
-                            <span className="text-sm font-medium">Template {i + 1}</span>
-                          </button>
-                        ))}
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                        <span className="text-gray-700">Custom AI agents and automation design & development</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                        <span className="text-gray-700">System integration and workflow optimisation</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                        <span className="text-gray-700">Team training and support</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                        <span className="text-gray-700">90-day performance guarantee</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                        <span className="text-gray-700">Ongoing optimisation and support</span>
                       </div>
                     </div>
                   </div>
-
-                  {/* Cursor Composer Section - Hidden on mobile */}
-                  <div className="hidden md:flex md:w-1/2 md:flex-col">
-                    <div className="p-4 border-b border-neutral-800">
-                      <h2 className="text-lg font-medium">Cursor Composer</h2>
+                  
+                  <div className="mb-6">
+                    <h4 className="font-medium text-gray-900 mb-3">How Pricing Works:</h4>
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <p><strong>Discovery Session (Free):</strong> Understand your needs and challenges</p>
+                      <p><strong>Proposal:</strong> Fixed-price quote based on your specific requirements</p>
+                      <p><strong>Transparent Pricing:</strong> No surprises, no hidden costs</p>
                     </div>
-                    <div className="flex-1 p-4 overflow-y-auto space-y-4">
-                      {/* First Message */}
-                      <div className="flex justify-end">
-                        <div className="max-w-[85%] p-4 bg-neutral-800 rounded-lg">
-                          <p className="text-sm text-neutral-300 text-right">
-                            Sure, I can make those changes for you.
-                          </p>
-                        </div>
-                      </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-accent mb-2">Typical Investment Range: $3,000 - $30,000 AUD</p>
+                    <p className="text-sm text-gray-600 mb-6">Depends on number of agents, complexity, and integrations</p>
+                    <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-10 py-4 rounded-lg shadow-soft">
+                      Start with Free Discovery
+                    </Button>
+                  </div>
+                </div>
+               
+               <div className="bg-white rounded-2xl p-8 border-2 border-gray-100 shadow-soft">
+                 <div className="flex items-center gap-3 mb-6">
+                   <div className="bg-accent text-white px-3 py-1 rounded-full text-sm font-medium">Perfect for Getting Started</div>
+                 </div>
+                 <h3 className="text-2xl font-medium mb-4 text-gray-900">Start with a Strategy Session</h3>
+                 <p className="text-gray-700 mb-6">
+                   Not sure where to begin? Let's talk. I'll assess your situation, identify your best opportunities for AI agents and intelligent automation, and give you a clear roadmap—whether you work with me or not.
+                 </p>
+                 
+                 <div className="mb-6">
+                   <h4 className="font-medium text-gray-900 mb-3">What You Get:</h4>
+                   <div className="space-y-3">
+                     <div className="flex items-center gap-3">
+                       <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                       <span className="text-gray-700">90-minute deep-dive session with Tim</span>
+                     </div>
+                     <div className="flex items-center gap-3">
+                       <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                       <span className="text-gray-700">Detailed AI and automation opportunity assessment</span>
+                     </div>
+                     <div className="flex items-center gap-3">
+                       <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                       <span className="text-gray-700">Custom implementation roadmap</span>
+                     </div>
+                     <div className="flex items-center gap-3">
+                       <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                       <span className="text-gray-700">ROI projections and timeline</span>
+                     </div>
+                     <div className="flex items-center gap-3">
+                       <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                       <span className="text-gray-700">Recommended next steps</span>
+                     </div>
+                   </div>
+                 </div>
+                 
+                 <div className="text-center">
+                   <p className="text-2xl font-bold text-accent mb-2">Investment: $500 AUD</p>
+                   <p className="text-sm text-gray-600 mb-6">(credited toward full project if you proceed)</p>
+                   <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-10 py-4 rounded-lg shadow-soft">
+                     Book Strategy Session
+                   </Button>
+                 </div>
+               </div>
+             </div>
+          </div>
+        </section>
 
-                      {/* Status Updates */}
-                      <div className="flex flex-col gap-2">
-                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
-                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
-                        </div>
-                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
-                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
-                        </div>
-                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
-                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
-                        </div>
-                        <div className="self-end max-w-[85%] p-3 bg-neutral-800 rounded-lg">
-                          <p className="text-sm font-medium text-green-400 text-right">File generated</p>
-                        </div>
-                      </div>
+        {/* Why Work with Tim */}
+        <section className="py-24 px-8 bg-gray-50">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className={`text-4xl font-bold mb-6 text-gray-900 ${inter.className}`}>
+                Why Businesses Choose to Work with Me
+              </h2>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/90 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-8">🎯</div>
+                                 <h3 className="text-xl font-medium mb-4 text-gray-900">I Only Do AI Agents & Automation</h3>
+                 <p className="text-gray-700">
+                   While other consultants dabble in everything AI, I focus exclusively on agents and intelligent automation. This means you get depth of expertise, not breadth of confusion.
+                 </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/90 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-8">🤝</div>
+                                 <h3 className="text-xl font-medium mb-4 text-gray-900">I Stay Hands-On</h3>
+                 <p className="text-gray-700">
+                   I don't build and disappear. I stay involved until your agents and automation systems are working perfectly and your team is confident using them.
+                 </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/90 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-8">💬</div>
+                                 <h3 className="text-xl font-medium mb-4 text-gray-900">I Speak Business, Not Tech</h3>
+                 <p className="text-gray-700">
+                   I translate complex AI and automation capabilities into clear business outcomes. You'll always understand exactly what we're building and why.
+                 </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/90 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-8">✅</div>
+                                 <h3 className="text-xl font-medium mb-4 text-gray-900">I Guarantee Results</h3>
+                 <p className="text-gray-700">
+                   If your AI agents and automation don't deliver measurable improvements within 90 days, I'll work with you until they do—at no additional cost. That's how confident I am in my approach.
+                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                      {/* Completion Message */}
-                      <div className="flex justify-end">
-                        <div className="max-w-[85%] p-4 bg-neutral-800 rounded-lg">
-                          <p className="text-sm text-neutral-300 text-right">
-                            I&apos;ve successfully created your app
-                          </p>
-                        </div>
-                      </div>
+        {/* A Recent Project */}
+        <section className="py-24 px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+                             <div>
+                 <h2 className={`text-4xl font-bold mb-8 text-gray-900 ${inter.className}`}>
+                   How I Helped XPON's Sales Team Save 60 Hours Per Month with Three AI Agents
+                 </h2>
+                 
+                 <div className="space-y-6">
+                   <div>
+                     <h3 className="text-xl font-medium mb-3 text-accent">The Challenge</h3>
+                     <p className="text-gray-700">
+                       XPON's sales team was drowning in admin work. Prospecting research took hours, proposals took days, and reps struggled to improve their techniques.
+                     </p>
+                   </div>
+                   
+                   <div>
+                     <h3 className="text-xl font-medium mb-3 text-accent">The Solution</h3>
+                     <p className="text-gray-700 mb-4">
+                       Over 3 months, I built and deployed three AI agents:
+                     </p>
+                     <div className="grid grid-cols-1 gap-4 text-sm">
+                       <div className="bg-premium-light p-3 rounded">
+                         <strong>Prospecting Agent:</strong> Cut research time from 3 hours to 20 minutes per lead
+                       </div>
+                       <div className="bg-premium-light p-3 rounded">
+                         <strong>Proposal & SOW Agent:</strong> Reduced proposal time from 8-12 hours to 2 hours
+                       </div>
+                       <div className="bg-premium-light p-3 rounded">
+                         <strong>Sales Coaching Agent:</strong> Provided real-time performance insights
+                       </div>
+                     </div>
+                   </div>
+
+                   <div>
+                     <h3 className="text-xl font-medium mb-2 text-accent">The Results</h3>
+                     <div className="grid grid-cols-2 gap-4">
+                       <div className="text-center bg-green-50 p-4 rounded-lg">
+                         <div className="text-2xl font-bold text-green-600">40hrs</div>
+                         <div className="text-sm text-gray-600">Saved per month</div>
+                       </div>
+                       <div className="text-center bg-accent/10 p-4 rounded-lg">
+                         <div className="text-2xl font-bold text-accent">$29k</div>
+                         <div className="text-sm text-gray-600">Annualised productivity savings</div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+
+              <div className="bg-premium-light rounded-2xl p-8 shadow-soft">
+                <div className="bg-white rounded-xl p-6 mb-6 shadow-soft">
+                  <h4 className="font-medium mb-4 text-gray-900">AI Agent Interface Preview</h4>
+                  <div className="bg-gray-50 rounded-lg h-48 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-3xl mb-2">🤖</div>
+                      <p className="text-gray-600">AI Agent Dashboard</p>
                     </div>
-                    <div className="p-4 border-t border-neutral-800">
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="Type your message..."
-                          className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500/30"
-                        />
-                        <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-green-500/10 rounded-lg text-green-400 hover:bg-green-500/20 transition-colors">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M22 2L11 13"/>
-                            <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
-                          </svg>
-                        </button>
+                        </div>
                       </div>
+                <div className="bg-white rounded-xl p-6 shadow-soft">
+                  <h4 className="font-medium mb-4 text-gray-900">Results Dashboard</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Calls Handled</span>
+                      <span className="font-medium text-gray-900">1,247</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Response Time</span>
+                      <span className="font-medium text-gray-900">12s avg</span>
+                      </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Satisfaction</span>
+                      <span className="font-medium text-green-600">4.8/5</span>
                     </div>
                   </div>
                 </div>
@@ -330,112 +631,148 @@ export default function Page() {
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-20 px-6 border-t border-neutral-800">
-          <div className="max-w-[1200px] mx-auto">
-            <div className="text-center mb-16 scroll-animation">
-              <h2 className={`text-3xl md:text-4xl font-medium mb-3 ${playfair.className}`}>Create in Minutes, Not Months</h2>
-              <p className="text-neutral-400 text-lg">Transform your ideas into reality with three simple prompts.</p>
+        {/* About Tim */}
+        <section id="about" className="py-24 px-8 bg-premium-light">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+               <h2 className={`text-4xl font-bold mb-8 text-gray-900 ${inter.className}`}>
+                  A bit more about me
+                </h2>
+                
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    I didn't start out as an AI expert. My background is in B2B marketing, where I learnt that the best technology solutions are the ones that make people's work simpler and better, not more complicated.
+                  </p>
+                  <p>
+                    When AI started emerging, I was fascinated. So... I decided to go on a journey of rapid learning and adoption so I could specialise. I wanted to become the person businesses could trust to implement AI that actually delivers value.
+                  </p>
+                  <p>
+                    Today, I work exclusively with businesses ready to implement AI agents thoughtfully and effectively.
+                  </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 relative">
-              <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800/80 hover:border-green-500/20 transition-colors scroll-animation scroll-delay-1 group">
-                <div className="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
+                <div className="mt-8">
+                  <h3 className="text-xl font-medium mb-4 text-gray-900">My Background</h3>
+                  <div className="space-y-2 text-gray-700">
+                    <p>• 8+ years in B2B Marketing and Technology</p>
+                    <p>• Former Google Marketing Award Winner (2023)</p>
+                    <p>• Certified in a variety of AI platforms and marketing technology</p>
+                    <p>• Speaker and thought leader in the marketing industry</p>
+                    <p>• Based in Wollongong/Sydney, working with clients across Australia</p>
+                  </div>
                 </div>
-                <h3 className={`text-xl font-medium mb-3 group-hover:text-green-400 transition-colors ${playfair.className}`}>Download Template</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Get started with our production-ready template. It&apos;s packed with everything you need to build a stunning landing page.
-                </p>
+                
+                <div className="mt-8">
+                  <h3 className="text-xl font-medium mb-4 text-gray-900">When I'm Not Playing With AI</h3>
+                  <p className="text-gray-700">
+                    I'm probably hanging out with my young family or playing golf. I love coffee and the occassional beer, so if you prefer to connect over a cup or glass, I'm all for it.
+                  </p>
+                </div>
               </div>
 
-              <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800/80 hover:border-green-500/20 transition-colors scroll-animation scroll-delay-2 group">
-                <div className="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4z"/>
-                  </svg>
+              <div className="rounded-2xl overflow-hidden shadow-soft">
+                <div className="relative h-[480px]">
+                  <Image
+                    src="/images/tim-presentation.jpeg"
+                    alt="Tim presenting"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                  />
                 </div>
-                <h3 className={`text-xl font-medium mb-3 group-hover:text-green-400 transition-colors ${playfair.className}`}>Tell VibeDev What You Want</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Describe your vision in plain English. VibeDev will control Cursor to transform your words into a beautiful, functional design.
-                </p>
-              </div>
-
-              <div className="bg-neutral-900 p-8 rounded-xl border border-neutral-800/80 hover:border-green-500/20 transition-colors scroll-animation scroll-delay-3 group">
-                <div className="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
-                  </svg>
-                </div>
-                <h3 className={`text-xl font-medium mb-3 group-hover:text-green-400 transition-colors ${playfair.className}`}>Deploy to Vercel</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Deploy your landing page to Vercel with one click. Share your creation with the world instantly on a global edge network.
-                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Early Access Form Section */}
-        <section id="early-access-form" className="py-20 px-6 border-t border-neutral-800 bg-neutral-900/80">
-          <div className="max-w-[1200px] mx-auto text-center">
-            <div className="scroll-animation">
-              <h2 className={`text-3xl md:text-4xl font-medium mb-4 ${playfair.className}`}>Get Early Access</h2>
-              <p className="text-neutral-400 mb-12">Be the first to experience the future of coding.</p>
+        {/* Final CTA */}
+        <section className="py-20 px-8 bg-premium-light text-gray-900">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className={`text-4xl font-bold mb-6 ${inter.className}`}>
+              Ready to Build AI Agents That Actually Work?
+            </h2>
+            <p className="text-xl mb-8 text-gray-700">
+              If you're tired of AI promises that don't deliver, let's talk. I'll show you exactly how AI agents can transform your specific situation—no generic pitches, no one-size-fits-all solutions.
+            </p>
+            <p className="text-lg mb-8 text-gray-700">
+              Book a 30-minute conversation with me. We'll discuss your challenges, explore what's possible, and I'll give you a clear next step—whether that's working together or tackling this yourself.
+            </p>
+            
+            <div className="bg-white rounded-2xl p-8 mb-8 shadow-soft">
+              <h3 className="text-xl font-medium mb-4 text-gray-900">What We'll Cover</h3>
+              <div className="grid md:grid-cols-2 gap-4 text-left">
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-white text-sm font-bold">✓</div>
+                  <span className="text-gray-700">Your biggest operational challenges</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-white text-sm font-bold">✓</div>
+                  <span className="text-gray-700">Specific AI agent opportunities in your business</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-white text-sm font-bold">✓</div>
+                  <span className="text-gray-700">Realistic timelines and investment requirements</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-white text-sm font-bold">✓</div>
+                  <span className="text-gray-700">Expected ROI and success metrics</span>
+                </div>
+                <div className="flex items-center gap-3 md:col-span-2">
+                  <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-white text-sm font-bold">✓</div>
+                  <span className="text-gray-700">Next steps (with or without me)</span>
+                </div>
+              </div>
             </div>
-            <div className="max-w-[400px] mx-auto scroll-animation">
-              <iframe 
-                data-tally-src="https://tally.so/embed/wM756p?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
-                loading="lazy" 
-                width="100%" 
-                height="230" 
-                frameBorder="0" 
-                title="Sign Up for Early Access"
-              ></iframe>
-            </div>
+            
+            <Button onClick={openModal} size="lg" className="bg-accent hover:bg-accent-dark text-white text-lg px-10 py-4 rounded-lg shadow-soft shadow-soft-hover transition-all duration-300">
+              Book a Call with Tim
+            </Button>
           </div>
         </section>
+
       </main>
+      {/* Global Call/Strategy modal */}
+      <CallFormModal open={isModalOpen} onClose={closeModal} />
 
-      <footer className="py-8 px-6 border-t border-neutral-800/50 scroll-animation">
-        <div className="max-w-[1200px] mx-auto flex items-center justify-between">
-          <div className="text-sm text-neutral-400">
-            © 2024 Software Composer LP. All rights reserved.
+      {/* Footer */}
+      <footer id="contact" className="py-12 px-8 border-t border-gray-100 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center text-white font-bold text-sm">TL</div>
+                <span className={`text-xl font-bold text-gray-900 ${inter.className}`}>Tim Lillyman</span>
+              </div>
+              <p className="text-gray-600 mb-4 text-sm">
+                Building AI agents that actually work for forward-thinking businesses.
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="font-medium mb-4 text-gray-900">Contact</h3>
+              <div className="space-y-2 text-gray-600 text-sm">
+                <p>📧 tim@timlillyman.com</p>
+                <p>📱 +61422271782</p>
+                <p>💼 LinkedIn: /in/timlillyman</p>
+                <p>📍 Sydney, Australia</p>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="font-medium mb-4 text-gray-900">Quick Links</h3>
+              <div className="space-y-2 text-gray-600 text-sm">
+                <Link href="#about" className="block hover:text-accent transition-colors">About Tim</Link>
+                <Link href="#contact" className="block hover:text-accent transition-colors">Contact</Link>
+                <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-6 py-2 rounded-lg text-sm shadow-soft">
+                  Book a Call
+                </Button>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-              <span className="sr-only">Twitter</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
-              </svg>
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-              <span className="sr-only">GitHub</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-              </svg>
-            </a>
-            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-              <span className="sr-only">Discord</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6h0a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-7a3 3 0 0 1-3-3v0"/>
-                <path d="M6 18v-7a3 3 0 0 1 3-3h7"/>
-                <circle cx="8" cy="12" r="1"/>
-                <circle cx="16" cy="12" r="1"/>
-              </svg>
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-              <span className="sr-only">LinkedIn</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                <rect x="2" y="9" width="4" height="12"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
+          
+          <div className="border-t border-gray-200 mt-8 pt-8 text-center text-gray-600 text-sm">
+            <p>&copy; 2025 Tim Lillyman. All rights reserved.</p>
           </div>
         </div>
       </footer>

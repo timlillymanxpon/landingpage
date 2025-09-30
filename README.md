@@ -1,4 +1,13 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Contact form email setup
+This project uses an API route at `app/api/contact/route.ts` to email form submissions via Resend.
+
+Setup:
+- Create a Resend account and generate an API key
+- In your environment, set `RESEND_API_KEY=your_key_here`
+- Optionally, configure the `from` domain in `route.ts`
+
+Local dev without `RESEND_API_KEY` will log submissions to the server instead of sending emails.
 
 ## Getting Started
 
