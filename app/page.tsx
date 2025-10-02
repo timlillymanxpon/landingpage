@@ -81,7 +81,7 @@ export default function Page() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                     className="text-xl text-gray-600 mb-10 leading-relaxed"
                   >
-                    I partner with forward-thinking leaders to design AI agents and intelligent automation that don't just handle repetitive tasks—they transform how your entire operation runs.
+                    I partner with forward-thinking leaders and marketing teams to implement AI agents and intelligent automation that don't just handle repetitive tasks—they transform how your entire operation runs.
                   </motion.p>
 
                   <motion.div
@@ -311,7 +311,7 @@ export default function Page() {
         {/* Client Success Stories */}
         <section className="py-24 px-8 bg-gradient-to-br from-premium-light to-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-secondary/5 opacity-50"/>
-          <div className="max-w-7xl mx-auto relative">
+          <div className="max-w-5xl mx-auto relative">
             <FadeIn>
               <div className="text-center mb-16">
                 <h2 className={`text-4xl font-bold mb-6 text-gray-900 ${inter.className}`}>
@@ -320,67 +320,35 @@ export default function Page() {
               </div>
             </FadeIn>
 
-            <div className="grid lg:grid-cols-2 gap-12">
-              <FadeIn direction="left" delay={0.2}>
-                <motion.div
-                  whileHover={{ y: -8, boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.15)" }}
-                  className="bg-white rounded-2xl p-8 shadow-soft relative border border-gray-100"
-                >
-                  <div className="absolute top-6 left-6 text-5xl text-accent/30 font-serif">"</div>
-                  <div className="flex items-center gap-4 mb-6 relative z-10">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="flex-shrink-0"
-                    >
-                      <Image
-                        src="/images/Leadership-Chris_Rozic-modified.png"
-                        alt="Chris Rozic"
-                        width={80}
-                        height={80}
-                        className="w-20 h-20 rounded-full object-cover ring-2 ring-accent/20"
-                      />
-                    </motion.div>
-                    <div>
-                      <h3 className="font-medium text-lg text-gray-900">Chris Rozic</h3>
-                      <p className="text-secondary">Chief Growth Officer at XPON</p>
-                    </div>
+            <FadeIn delay={0.2}>
+              <motion.div
+                whileHover={{ y: -8, boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.15)" }}
+                className="bg-white rounded-2xl p-10 md:p-12 shadow-soft relative border-2 border-secondary/20"
+              >
+                <div className="absolute top-8 left-8 text-6xl text-secondary/30 font-serif">"</div>
+                <div className="flex items-center gap-4 mb-8 relative z-10">
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    className="flex-shrink-0"
+                  >
+                    <Image
+                      src="/images/Louise-Cummins-media-photo-modified.png"
+                      alt="Louise Cummins"
+                      width={96}
+                      height={96}
+                      className="w-24 h-24 rounded-full object-cover ring-4 ring-secondary/30"
+                    />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-medium text-xl text-gray-900">Louise Cummins</h3>
+                    <p className="text-accent text-base">Co-Founder of Australian Centre for AI in Marketing</p>
                   </div>
-                  <blockquote className="text-gray-700 text-lg italic mb-6 relative z-10">
-                    "Tim has been a genuine force multiplier for our entire Go-to-Market function. His pioneering work in AI and automation has, and continues to deliver, tangible, bottom-line results for XPON. We've specifically seen a huge impact on our Sales team, with each rep saving over <span className="text-accent font-semibold not-italic">15 hours of their time each week</span> thanks to the AI systems Tim has built."
-                  </blockquote>
-                </motion.div>
-              </FadeIn>
-
-              <FadeIn direction="right" delay={0.4}>
-                <motion.div
-                  whileHover={{ y: -8, boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.15)" }}
-                  className="bg-white rounded-2xl p-8 shadow-soft relative border border-gray-100"
-                >
-                  <div className="absolute top-6 left-6 text-5xl text-secondary/30 font-serif">"</div>
-                  <div className="flex items-center gap-4 mb-6 relative z-10">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="flex-shrink-0"
-                    >
-                      <Image
-                        src="/images/Louise-Cummins-media-photo-modified.png"
-                        alt="Louise Cummins"
-                        width={80}
-                        height={80}
-                        className="w-20 h-20 rounded-full object-cover ring-2 ring-secondary/20"
-                      />
-                    </motion.div>
-                    <div>
-                      <h3 className="font-medium text-lg text-gray-900">Louise Cummins</h3>
-                      <p className="text-accent">Co-Founder of Australian Centre for AI in Marketing</p>
-                    </div>
-                  </div>
-                  <blockquote className="text-gray-700 text-lg italic mb-6 relative z-10">
-                    "In the rapidly evolving landscape of AI in marketing, it is critical to identify the next generation of leaders who can navigate the complexity. <span className="text-secondary font-semibold not-italic">Tim Lillyman is undoubtedly one of those leaders.</span> Through the events and conversations I have hosted with Tim, I've been consistently impressed. He pairs a forward-thinking, strategic vision with the crucial, hands-on technical knowledge required to execute on it."
-                  </blockquote>
-                </motion.div>
-              </FadeIn>
-            </div>
+                </div>
+                <blockquote className="text-gray-700 text-xl italic leading-relaxed relative z-10">
+                  "In the rapidly evolving landscape of AI in marketing, it is critical to identify the next generation of leaders who can navigate the complexity. <span className="text-secondary font-semibold not-italic">Tim Lillyman is undoubtedly one of those leaders.</span> Through the events and conversations I have hosted with Tim, I've been consistently impressed. He pairs a forward-thinking, strategic vision with the crucial, hands-on technical knowledge required to execute on it."
+                </blockquote>
+              </motion.div>
+            </FadeIn>
           </div>
         </section>
 
@@ -494,25 +462,12 @@ export default function Page() {
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
-                        <span className="text-gray-700">Team training and support</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
-                        <span className="text-gray-700">90-day performance guarantee</span>
+                        <span className="text-gray-700">Team training and documentation</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
                         <span className="text-gray-700">Ongoing optimisation and support</span>
                       </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mb-6">
-                    <h4 className="font-medium text-gray-900 mb-3">How Pricing Works:</h4>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <p><strong>Discovery Session (Free):</strong> Understand your needs and challenges</p>
-                      <p><strong>Proposal:</strong> Fixed-price quote based on your specific requirements</p>
-                      <p><strong>Transparent Pricing:</strong> No surprises, no hidden costs</p>
                     </div>
                   </div>
                   
@@ -584,7 +539,7 @@ export default function Page() {
               </div>
             </FadeIn>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-3 gap-8">
               <FadeIn delay={0.1}>
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
@@ -593,13 +548,13 @@ export default function Page() {
                   <motion.div
                     whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
                     transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
+                    className="w-16 h-16 bg-gradient-to-br from-accent to-secondary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
                   >
-                    🎯
+                    💬
                   </motion.div>
-                  <h3 className="text-xl font-medium mb-4 text-gray-900">I Only Do AI Agents & Automation</h3>
+                  <h3 className="text-xl font-medium mb-4 text-gray-900">I Speak Business, Not Tech</h3>
                   <p className="text-gray-700">
-                    While other consultants dabble in everything AI, I focus exclusively on agents and intelligent automation. This means you get depth of expertise, not breadth of confusion.
+                    I translate complex AI and automation capabilities into clear business outcomes. You'll always understand exactly what we're building and why.
                   </p>
                 </motion.div>
               </FadeIn>
@@ -631,32 +586,13 @@ export default function Page() {
                   <motion.div
                     whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
                     transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-gradient-to-br from-accent to-secondary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
+                    className="w-16 h-16 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
                   >
-                    💬
+                    🚀
                   </motion.div>
-                  <h3 className="text-xl font-medium mb-4 text-gray-900">I Speak Business, Not Tech</h3>
+                  <h3 className="text-xl font-medium mb-4 text-gray-900">I'm Constantly Learning</h3>
                   <p className="text-gray-700">
-                    I translate complex AI and automation capabilities into clear business outcomes. You'll always understand exactly what we're building and why.
-                  </p>
-                </motion.div>
-              </FadeIn>
-
-              <FadeIn delay={0.4}>
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="text-center bg-white rounded-xl p-6 shadow-soft border border-gray-100"
-                >
-                  <motion.div
-                    whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
-                  >
-                    ✅
-                  </motion.div>
-                  <h3 className="text-xl font-medium mb-4 text-gray-900">I Guarantee Results</h3>
-                  <p className="text-gray-700">
-                    If your AI agents and automation don't deliver measurable improvements within 90 days, I'll work with you until they do—at no additional cost. That's how confident I am in my approach.
+                    AI evolves fast. I'm always testing new tools, exploring emerging techniques, and staying ahead of the curve.
                   </p>
                 </motion.div>
               </FadeIn>
@@ -672,7 +608,7 @@ export default function Page() {
               <FadeIn direction="left">
                 <div>
                   <h2 className={`text-4xl font-bold mb-8 text-gray-900 ${inter.className}`}>
-                    How I Helped <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">XPON's Sales Team</span> Save 60 Hours Per Month with Three AI Agents
+                    How I Helped <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">XPON's Sales Team</span> Save 40 Hours Per Month with Three AI Agents
                   </h2>
 
                   <div className="space-y-6">
@@ -703,19 +639,19 @@ export default function Page() {
                           whileHover={{ scale: 1.02, x: 4 }}
                           className="bg-gradient-to-r from-accent/10 to-accent/5 p-4 rounded-lg border-l-4 border-accent"
                         >
-                          <strong className="text-accent">Prospecting Agent:</strong> Cut research time from 3 hours to 20 minutes per lead
+                          <strong className="text-accent">Prospecting Agent:</strong> Cut research time from 2 hours to 2 minutes per lead
                         </motion.div>
                         <motion.div
                           whileHover={{ scale: 1.02, x: 4 }}
                           className="bg-gradient-to-r from-secondary/10 to-secondary/5 p-4 rounded-lg border-l-4 border-secondary"
                         >
-                          <strong className="text-secondary">Proposal & SOW Agent:</strong> Reduced proposal time from 8-12 hours to 2 hours
+                          <strong className="text-secondary">Proposal & SOW Agent:</strong> Reduced proposal time from 4 hours to 10 minutes
                         </motion.div>
                         <motion.div
                           whileHover={{ scale: 1.02, x: 4 }}
                           className="bg-gradient-to-r from-accent/10 to-secondary/5 p-4 rounded-lg border-l-4 border-accent"
                         >
-                          <strong className="text-accent">Sales Coaching Agent:</strong> Provided real-time performance insights
+                          <strong className="text-accent">Sales Coaching Agent:</strong> Provides 1-to-1 coaching immediately after every call
                         </motion.div>
                       </div>
                     </motion.div>
@@ -753,101 +689,33 @@ export default function Page() {
               </FadeIn>
 
               <FadeIn direction="right" delay={0.3}>
-                <div className="space-y-6">
-                  <motion.div
-                    whileHover={{ y: -8 }}
-                    className="bg-white rounded-2xl p-8 shadow-soft border border-gray-100"
-                  >
-                    <div className="flex items-center gap-3 mb-6">
-                      <motion.div
-                        animate={{ rotate: [0, 360] }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="text-3xl"
-                      >
-                        🤖
-                      </motion.div>
-                      <h4 className="font-medium text-gray-900 text-lg">AI Agent Dashboard</h4>
+                <motion.div
+                  whileHover={{ y: -8, boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.15)" }}
+                  className="bg-white rounded-2xl p-8 shadow-soft relative border border-gray-100"
+                >
+                  <div className="absolute top-6 left-6 text-5xl text-accent/30 font-serif">"</div>
+                  <div className="flex items-center gap-4 mb-6 relative z-10">
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      className="flex-shrink-0"
+                    >
+                      <Image
+                        src="/images/Leadership-Chris_Rozic-modified.png"
+                        alt="Chris Rozic"
+                        width={80}
+                        height={80}
+                        className="w-20 h-20 rounded-full object-cover ring-2 ring-accent/20"
+                      />
+                    </motion.div>
+                    <div>
+                      <h3 className="font-medium text-lg text-gray-900">Chris Rozic</h3>
+                      <p className="text-secondary">Chief Growth Officer at XPON</p>
                     </div>
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6">
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-600">System Status</span>
-                          <motion.div
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="flex items-center gap-2"
-                          >
-                            <div className="w-2 h-2 bg-green-500 rounded-full"/>
-                            <span className="text-green-600 font-medium">Active</span>
-                          </motion.div>
-                        </div>
-                        <div className="h-px bg-gray-200"/>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Agents Running</span>
-                          <span className="font-medium text-gray-900"><CountUp to={3} /></span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Tasks Completed</span>
-                          <span className="font-medium text-accent"><CountUp to={1247} /></span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ y: -8 }}
-                    className="bg-white rounded-2xl p-8 shadow-soft border border-gray-100"
-                  >
-                    <h4 className="font-medium mb-6 text-gray-900 text-lg">Performance Metrics</h4>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <span className="text-gray-600">Task Accuracy</span>
-                          <span className="font-medium text-secondary"><CountUp to={94} suffix="%" /></span>
-                        </div>
-                        <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: "94%" }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.5, delay: 0.5 }}
-                            className="bg-gradient-to-r from-secondary to-accent h-full rounded-full"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <span className="text-gray-600">Avg Response Time</span>
-                          <span className="font-medium text-accent"><CountUp to={12} suffix="s" /></span>
-                        </div>
-                        <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: "85%" }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.5, delay: 0.7 }}
-                            className="bg-gradient-to-r from-accent to-secondary h-full rounded-full"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <span className="text-gray-600">User Satisfaction</span>
-                          <span className="font-medium text-green-600"><CountUp to={4.8} suffix="/5" /></span>
-                        </div>
-                        <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: "96%" }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.5, delay: 0.9 }}
-                            className="bg-gradient-to-r from-green-400 to-green-600 h-full rounded-full"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
+                  </div>
+                  <blockquote className="text-gray-700 text-lg italic mb-6 relative z-10">
+                    "Tim has been a genuine force multiplier for our entire Go-to-Market function. His pioneering work in AI and automation has, and continues to deliver, tangible, bottom-line results for XPON. We've specifically seen a huge impact on our Sales team, with each rep saving over <span className="text-accent font-semibold not-italic">15 hours of their time each week</span> thanks to the AI systems Tim has built."
+                  </blockquote>
+                </motion.div>
               </FadeIn>
             </div>
           </div>
@@ -944,8 +812,8 @@ export default function Page() {
                 >
                   <div className="relative h-[480px]">
                     <Image
-                      src="/images/tim-presentation.jpeg"
-                      alt="Tim presenting"
+                      src="/images/tim-family-photo.png"
+                      alt="Tim with family"
                       fill
                       className="object-cover"
                       sizes="(min-width: 1024px) 40vw, 100vw"
@@ -964,7 +832,7 @@ export default function Page() {
           <div className="max-w-4xl mx-auto text-center relative">
             <FadeIn>
               <h2 className={`text-4xl font-bold mb-6 ${inter.className}`}>
-                Ready to Build <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">AI Agents That Actually Work?</span>
+                Ready to Accelerate Your Business <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">with AI?</span>
               </h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
