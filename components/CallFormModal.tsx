@@ -82,36 +82,39 @@ export default function CallFormModal({ open, onClose }: CallFormModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white w-full max-w-lg mx-4 rounded-2xl shadow-2xl border border-gray-200">
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-          <h3 className="text-xl font-medium">Book a Call</h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>
+      <div className="relative bg-white w-full max-w-lg mx-4 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-secondary to-accent"></div>
+        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">Book a Call</h3>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors text-2xl">✕</button>
         </div>
 
         {isSuccess ? (
-          <div className="p-8 text-center space-y-3">
-            <div className="mx-auto w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl">✓</div>
-            <p className="text-lg font-medium">Submission received</p>
+          <div className="p-8 text-center space-y-4">
+            <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-secondary flex items-center justify-center text-white text-2xl">✓</div>
+            </div>
+            <p className="text-xl font-bold text-gray-900">Submission received</p>
             <p className="text-gray-600">{message}</p>
           </div>
         ) : (
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">First name *</label>
+              <label className="block text-sm font-medium mb-1 text-gray-700">First name *</label>
               <input
                 type="text"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                 value={form.firstName}
                 onChange={updateField('firstName')}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Last name</label>
+              <label className="block text-sm font-medium mb-1 text-gray-700">Last name</label>
               <input
                 type="text"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                 value={form.lastName}
                 onChange={updateField('lastName')}
               />
@@ -120,20 +123,20 @@ export default function CallFormModal({ open, onClose }: CallFormModalProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Company *</label>
+              <label className="block text-sm font-medium mb-1 text-gray-700">Company *</label>
               <input
                 type="text"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                 value={form.company}
                 onChange={updateField('company')}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Role</label>
+              <label className="block text-sm font-medium mb-1 text-gray-700">Role</label>
               <input
                 type="text"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                 value={form.role}
                 onChange={updateField('role')}
               />
@@ -142,20 +145,20 @@ export default function CallFormModal({ open, onClose }: CallFormModalProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Email *</label>
+              <label className="block text-sm font-medium mb-1 text-gray-700">Email *</label>
               <input
                 type="email"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                 value={form.email}
                 onChange={updateField('email')}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Phone</label>
+              <label className="block text-sm font-medium mb-1 text-gray-700">Phone</label>
               <input
                 type="tel"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                 value={form.phone}
                 onChange={updateField('phone')}
               />
@@ -163,9 +166,9 @@ export default function CallFormModal({ open, onClose }: CallFormModalProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Inquiry *</label>
+            <label className="block text-sm font-medium mb-1 text-gray-700">Inquiry *</label>
             <textarea
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
               value={form.inquiry}
               onChange={updateField('inquiry')}
               required
@@ -177,8 +180,8 @@ export default function CallFormModal({ open, onClose }: CallFormModalProps) {
           )}
 
           <div className="flex items-center justify-end gap-3 pt-2">
-            <Button type="button" onClick={onClose} className="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-full">Cancel</Button>
-            <Button type="submit" disabled={submitting} className="bg-accent hover:bg-accent-dark text-white px-5 py-2 rounded-full">
+            <Button type="button" onClick={onClose} className="bg-gray-100 text-gray-700 hover:bg-gray-200 px-6 py-2.5 rounded-full transition-colors text-base">Cancel</Button>
+            <Button type="submit" disabled={submitting} className="bg-gradient-to-r from-accent to-secondary hover:from-accent-dark hover:to-secondary-dark text-white px-6 py-2.5 rounded-full shadow-soft transition-all disabled:opacity-50 text-base">
               {submitting ? 'Sending...' : 'Submit'}
             </Button>
           </div>

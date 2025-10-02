@@ -4,11 +4,15 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function ROICalculator() {
+interface ROICalculatorProps {
+  onBookCall?: () => void
+}
+
+export default function ROICalculator({ onBookCall }: ROICalculatorProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [employees, setEmployees] = useState(10)
-  const [hoursSaved, setHoursSaved] = useState(5)
-  const [hourlyRate, setHourlyRate] = useState(50)
+  const [employees, setEmployees] = useState(3)
+  const [hoursSaved, setHoursSaved] = useState(8)
+  const [hourlyRate, setHourlyRate] = useState(80)
 
   const monthlySavings = employees * hoursSaved * 4 * hourlyRate
   const yearlySavings = monthlySavings * 12
@@ -19,7 +23,7 @@ export default function ROICalculator() {
     <div className="relative">
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-secondary hover:bg-secondary-dark text-white px-8 py-3 rounded-lg shadow-soft"
+        className="bg-secondary hover:bg-secondary-dark text-white px-8 py-3 rounded-lg shadow-soft text-base"
       >
         Calculate Your ROI
       </Button>
@@ -31,15 +35,16 @@ export default function ROICalculator() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 z-40"
+              className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4"
               onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8 shadow-2xl z-50 max-w-2xl w-full mx-4"
             >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white rounded-2xl p-8 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              >
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold text-gray-900">ROI Calculator</h3>
                 <button
@@ -122,12 +127,16 @@ export default function ROICalculator() {
                 </div>
 
                 <Button
-                  onClick={() => setIsOpen(false)}
-                  className="w-full bg-accent hover:bg-accent-dark text-white py-3 rounded-lg"
+                  onClick={() => {
+                    setIsOpen(false)
+                    onBookCall?.()
+                  }}
+                  className="w-full bg-accent hover:bg-accent-dark text-white py-3 rounded-lg text-base"
                 >
                   Book a Call to Discuss
                 </Button>
               </div>
+              </motion.div>
             </motion.div>
           </>
         )}

@@ -93,11 +93,11 @@ export default function Page() {
                     <Button
                       onClick={openModal}
                       size="lg"
-                      className="bg-accent hover:bg-accent-dark text-white text-lg px-10 py-5 rounded-lg shadow-soft hover:shadow-soft-hover hover:scale-105 transition-all duration-300 font-medium"
+                      className="bg-accent hover:bg-accent-dark text-white text-base px-10 py-5 rounded-lg shadow-soft hover:shadow-soft-hover hover:scale-105 transition-all duration-300 font-medium"
                     >
                       Book a call with me
                     </Button>
-                    <ROICalculator />
+                    <ROICalculator onBookCall={openModal} />
                   </motion.div>
                 </div>
               </FadeIn>
@@ -451,8 +451,8 @@ export default function Page() {
               <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-6">
                 These are just six examples. Your business might need something completely different—and that's exactly what I specialise in: custom AI agents designed for your unique processes and challenges.
               </p>
-              <Button asChild className="bg-accent hover:bg-accent-dark text-white px-8 py-3 rounded-lg shadow-soft">
-                <Link href="#services">Book Your Strategy Session</Link>
+              <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-8 py-3 rounded-lg shadow-soft text-base">
+                Book Your Strategy Session
               </Button>
             </div>
           </div>
@@ -519,7 +519,7 @@ export default function Page() {
                   <div className="text-center">
                     <p className="text-2xl font-bold text-accent mb-2">Typical Investment Range: $3,000 - $30,000 AUD</p>
                     <p className="text-sm text-gray-600 mb-6">Depends on number of agents, complexity, and integrations</p>
-                    <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-10 py-4 rounded-lg shadow-soft">
+                    <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-10 py-4 rounded-lg shadow-soft text-base">
                       Start with Free Discovery
                     </Button>
                   </div>
@@ -563,7 +563,7 @@ export default function Page() {
                  <div className="text-center">
                    <p className="text-2xl font-bold text-accent mb-2">Investment: $500 AUD</p>
                    <p className="text-sm text-gray-600 mb-6">(credited toward full project if you proceed)</p>
-                   <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-10 py-4 rounded-lg shadow-soft">
+                   <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-10 py-4 rounded-lg shadow-soft text-base">
                      Book Strategy Session
                    </Button>
                  </div>
@@ -1041,7 +1041,7 @@ export default function Page() {
 
             <FadeIn delay={1.3}>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button onClick={openModal} size="lg" className="bg-gradient-to-r from-accent to-secondary hover:from-accent-dark hover:to-secondary-dark text-white text-lg px-10 py-4 rounded-lg shadow-soft">
+                <Button onClick={openModal} size="lg" className="bg-gradient-to-r from-accent to-secondary hover:from-accent-dark hover:to-secondary-dark text-white text-base px-10 py-4 rounded-lg shadow-soft">
                   Book a Call with Tim
                 </Button>
               </motion.div>
@@ -1082,7 +1082,7 @@ export default function Page() {
               <div className="space-y-2 text-gray-600 text-sm">
                 <Link href="#about" className="block hover:text-accent transition-colors">About Tim</Link>
                 <Link href="#contact" className="block hover:text-accent transition-colors">Contact</Link>
-                <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-6 py-2 rounded-lg text-sm shadow-soft">
+                <Button onClick={openModal} className="bg-accent hover:bg-accent-dark text-white px-6 py-2 rounded-lg text-base shadow-soft">
                   Book a Call
                 </Button>
               </div>
